@@ -12,18 +12,17 @@ class Main{
         Handler handler = new Handler(AES_algorithm);
 
         /* Getting menu option from the user */
-        System.out.print("\n Hello! This is Bix" + 
-                            "\n\n Choose a menu option:" + 
-                            "\n\n\t[1] Retrieve an account login credentials" +
-                            "\n\n\t[2] Store a new account login credential" +
-                            "\n\n\t[3] Reset Master Key" +
-                            "\n\n\t[X] Exit Bix" +
-                            "\n\n > Enter Menu option: ");
-        
+        System.out.print("\n Hello! This is Bix" +
+                "\n\n Choose a menu option:" +
+                "\n\n\t[1] Retrieve an account login credentials" +
+                "\n\n\t[2] Store a new account login credential" +
+                "\n\n\t[X] Exit Bix" +
+                "\n\n > Enter Menu option: ");
+
         char user_choice = sc.nextLine().trim().toUpperCase().charAt(0); //reading user's menu choice
 
         /* Checking if user wishes to terminate the program */
-        if(user_choice != '1' && user_choice != '2' && user_choice != '3'){
+        if(user_choice != '1' && user_choice != '2'){
             terminate();
         }
 
@@ -43,11 +42,7 @@ class Main{
                 account_name = sc.nextLine().trim().toUpperCase(); // reading account name
 
                 if(handler.accountExists(account_name)){ //checking if account exists
-                    // get credentials for the account
-                    handler.getCredentialsFor(account_name);
-                }
-                else{
-                    
+                    handler.getCredentialsFor(account_name); // get credentials for the account
                 }
                 break;
 
@@ -55,10 +50,6 @@ class Main{
 
             case '2': // create a new account login entry
                 handler.createAccountLogin();
-                break;
-
-            case '3':
-                handler.setNewMasterKey();
                 break;
 
         } //switch case

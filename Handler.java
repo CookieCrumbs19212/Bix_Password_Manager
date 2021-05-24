@@ -1,16 +1,15 @@
 import java.io.*;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
-
 /**
-* This is an object class that handles reading and writing in .csv files
-* This class also encrypts and decrypts data from .csv files
-*/
-
+ * This is an object class that handles reading and writing in .csv files
+ * This class also encrypts and decrypts data from .csv files
+ */
 class Handler extends Krypto {
 
     String CSV_FILE; // stores the path to the location where the csv file is stored
-    String HASH_FILE; // stores the path to the location where the master key hash file is stored 
+    String HASH_FILE; // stores the path to the location where the master key hash file is stored
 
     String master_key_hash; // stores the SHA256 hash of the master key
     boolean auth_success; // FALSE by default, turns TRUE if the user authentication is successful
@@ -20,8 +19,16 @@ class Handler extends Krypto {
     static Scanner sc;
 
     Handler(int algorithm) {
-        CSV_FILE = "./credentials.csv";
-        HASH_FILE = "./mkhash.txt";
+        // finding credentials.csv location
+        try {
+            // first line finds the location of .jar file, second line attaches
+            // "credentials.csv" string to the parent path of .jar file
+            // NOTE: it is assumed that the credentials.csv file is in the same folder as the .jar file
+            File jarFile = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            CSV_FILE = jarFile.getParent() + File.separator + "credentials.csv";
+        } catch (Exception e) {e.printStackTrace();}
+
+        HASH_FILE = "/mkhash.txt";
         AES_ALGORITHM = algorithm;
         auth_success = false;
         sc = new Scanner(System.in);
@@ -44,13 +51,13 @@ class Handler extends Krypto {
             System.out.println("\nERROR: Failed to locate credentials.csv in filepath.");
             file_located = false;
         }
-        File hash_file = new File(HASH_FILE);
-        if (hash_file.exists() == false) { // checking if hash file exists
+        URL hash_location = Handler.class.getResource(HASH_FILE);
+        if (hash_location == null) {
             System.out.println("\nERROR: Failed to locate mkhash.txt in filepath.");
             file_located = false;
         }
         if (!file_located) { terminate(); }
-        
+
     } //verifyFile()
 
     void authenticate () { // method to authenticate user
@@ -68,31 +75,6 @@ class Handler extends Krypto {
         } catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
 
     } // authenticate()
-
-    void setNewMasterKey () { // method to set a new master key for Bix
-        System.out.println("\nFirst time, ");
-        String newMK1 = getMasterKeyFromUser(true); // getting new master key first time
-        System.out.println("\nOnce more, ");
-        String newMK2 = getMasterKeyFromUser(true); // getting new master key second time
-        if (newMK1.equals(newMK2)) { // confirming that the user entered the same master key both times
-            try {
-                master_key_hash = getSHA256(newMK1); // getting hash of new master key
-
-                FileWriter writer = new FileWriter(HASH_FILE);
-                writer.write(master_key_hash); // storing hash in mkhash.txt
-
-                writer.flush();
-                writer.close();
-
-                System.out.println("\nNew Master Key set successfully");
-                terminate();
-            } catch (IOException | NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("\nERROR: Master Key reset unsuccessful.");
-        terminate();
-    } // setNewMasterKey()
 
     private String getMasterKeyFromUser (boolean newMK){ // gets the master key from the user
         String user_input; // stores the user's input
@@ -275,5 +257,4 @@ class Handler extends Krypto {
         return user_input;
 
     } // getData()
-
 } // class
