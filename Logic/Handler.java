@@ -1,3 +1,5 @@
+package Logic;
+
 import java.io.*;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
