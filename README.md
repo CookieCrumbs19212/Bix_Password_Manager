@@ -1,6 +1,6 @@
 # Bix_Password_Manager
 ## What is Bix?
-Bix is an Account Credentials Manager.
+Bix is an Login Credentials Manager.
 It encrypts and safely stores account login credentials.
 
 ## Important Definitions
