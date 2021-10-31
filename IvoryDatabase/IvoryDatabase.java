@@ -21,10 +21,10 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
      * IvoryDatabase.java class: 'Attribute[] attributes'
      */
     private ArrayList<Column> COLUMNS; // ArrayList of all Column objects of this Ivory Database.
-    private transient int no_of_columns; // keeps track of the total number of columns in the Database.
-    private transient int no_of_rows; // keeps track of the total number of rows in the Database.
+    private int no_of_columns; // keeps track of the total number of columns in the Database.
+    private int no_of_rows; // keeps track of the total number of rows in the Database.
 
-    private File FILE_LOCATION = null; // the file where the Ivory Database is stored and saved to.
+    private transient File FILE_LOCATION = null; // the file where the Ivory Database is stored and saved to.
 
     private static final String file_extension = ".ivry"; // the file extension of the IvoryDB file.
     private static final String file_separator = File.separator; // the file separator of the System.
@@ -82,7 +82,7 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
 
 
     /** 
-     * opening an existng IvoryDatabase from file at {@code file_path}.
+     * opening an existing IvoryDatabase from file at {@code file_path}.
      * 
      * @param file_path
      *        the file path in the system where an existing Ivory Database
@@ -120,9 +120,9 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
             IvoryDatabase deserializedDB = (IvoryDatabase) streamIn.readObject();
             this.COLUMNS = deserializedDB.COLUMNS;
 
-            // assinging the size of the ID column to no_of_rows.
+            // assigning the size of the ID column to no_of_rows.
             this.no_of_rows = COLUMNS.get(0).getSize();
-            // assiging the size of the COLUMNS array list to no_of_columns.
+            // assigning the size of the COLUMNS array list to no_of_columns.
             this.no_of_columns = COLUMNS.size();
             
 
@@ -135,13 +135,12 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
 
         } catch (Exception e) {
             e.printStackTrace();
-            return;
         }
     } // constructor IvoryDatabase(String)
 
 
     /** 
-     * opening an existng Ivory Database from {@code ivory_file}.
+     * opening an existing Ivory Database from {@code ivory_file}.
      * 
      * @param ivory_file
      *        the file where an existing Ivory Database file (.ivry) is stored.
@@ -179,9 +178,9 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
             IvoryDatabase deserializedDB = (IvoryDatabase) streamIn.readObject();
             this.COLUMNS = deserializedDB.COLUMNS;
 
-            // assinging the size of the ID column to no_of_rows.
+            // assigning the size of the ID column to no_of_rows.
             this.no_of_rows = COLUMNS.get(0).getSize();
-            // assiging the size of the COLUMNS array list to no_of_columns.
+            // assigning the size of the COLUMNS array list to no_of_columns.
             this.no_of_columns = COLUMNS.size();
 
             // closing streams.
@@ -193,7 +192,6 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
 
         } catch (Exception e) {
             e.printStackTrace();
-            return;
         }
     } // constructor IvoryDatabase(File)
 
@@ -251,7 +249,7 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
         // the default name for the save file.
         String defaultFilename = "unnamed_ivory_database.ivry";
 
-        /** CREATING Local Ivory Databases DIRECTORY, IF IT DOESNT ALREADY EXIST **/
+        /** CREATING Local Ivory Databases DIRECTORY, IF IT DOESN'T ALREADY EXIST **/
         
         // getting the Path string of the current working directory.
         String workingDirectory = System.getProperty("user.dir");
@@ -435,7 +433,7 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
                 return FILE_LOCATION.renameTo(new_file); // rename
             }
         }
-        // if any error occured, returns false.
+        // if any error occurred, returns false.
         return false;
     } // renameDatabaseTo()
 
@@ -488,7 +486,7 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
             // if column does not exist, an exception is thrown. Deletion failed.
             return false;
         }
-        // reduce no_of_coulmns by one and return true for successful deletion.
+        // reduce no_of_columns by one and return true for successful deletion.
         no_of_columns--;
         return true;
     } // DELETE_COLUMN
@@ -799,7 +797,7 @@ public class IvoryDatabase implements AutoCloseable, java.io.Serializable{
      */
     private int getColumnNumberOf(String column_name)
         throws ColumnNotFoundException {
-        // make the column_name parameter uppcase.
+        // make the column_name parameter uppercase.
         column_name = column_name.toUpperCase();
 
         // run loop through columns to search for column with name: column_name.
