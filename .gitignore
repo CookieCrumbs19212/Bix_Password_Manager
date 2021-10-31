@@ -1,3 +1,4 @@
 # ignore the mkhash.txt and credentials.csv files which contain sensitive info
 mkhash.txt
 credentials.csv
+Bix_Password_Manager.iml
