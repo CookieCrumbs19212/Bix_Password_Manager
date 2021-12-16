@@ -1,9 +1,9 @@
 # Bix_Password_Manager
 
 ### **Bix Development Status Indicator:** 🔴
-🔴: Fatal flaws or bugs detected.<br/>
-🟡: New update in development.<br/>
-🟢: Healthy Release.<br/>
+🔴: Fatal flaws or bugs detected in the current release.<br/>
+🔵: New update in development.<br/>
+🟢: Healthy release.<br/>
 
 **ATTENTION:** DO NOT USE THIS CODE. THIS REPO IS STILL IN DEVELOPMENT, IT IS INFESTED WITH BUGS AND DESIGN FLAWS.
 
